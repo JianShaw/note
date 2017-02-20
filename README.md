@@ -12,5 +12,6 @@
 
 - [nodejs,mongodb,mongoose分页轮子](https://github.com/edwardhotchkiss/mongoose-paginate)
 
-- 
+- [async异步操作两个常用的方法](https://github.com/JianShaw/blog/issues/4)
+
 > react
