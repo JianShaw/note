@@ -10,5 +10,7 @@
 
 - [mongoose常用操作](https://github.com/JianShaw/blog/issues/3)
 
+- [nodejs,mongodb,mongoose分页轮子](https://github.com/edwardhotchkiss/mongoose-paginate)
 
+- 
 > react
