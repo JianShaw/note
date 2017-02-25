@@ -16,7 +16,7 @@
 
 - [requirejs使用二](http://www.jianshu.com/p/980e44636267)
 
-- [webpack 1.x版本构件](https://github.com/JianShaw/webpack1.x-demo)
+- [webpack 1.x版本构建](https://github.com/JianShaw/webpack1.x-demo)
 
 > nodejs
 
