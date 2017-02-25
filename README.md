@@ -10,6 +10,13 @@
 
 - [发布订阅模式](https://segmentfault.com/a/1190000007357192)
 
+- [vuejs简单使用](http://www.jianshu.com/p/7db811a39f7a)
+
+- [requirejs使用一](http://www.jianshu.com/p/6aca1e429019)
+
+- [requirejs使用二](http://www.jianshu.com/p/980e44636267)
+
+- [webpack 1.x版本构件](https://github.com/JianShaw/webpack1.x-demo)
 
 > nodejs
 
