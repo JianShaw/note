@@ -2,6 +2,15 @@
 
 > javascript...
 
+- [读书笔记之策略模式](https://segmentfault.com/a/1190000007286881)
+
+- [代理模式](https://segmentfault.com/a/1190000007299517)
+
+- [单例模式](https://segmentfault.com/a/1190000007348712)
+
+- [发布订阅模式](https://segmentfault.com/a/1190000007357192)
+
+
 > nodejs
 
 - [实现一个简单的静态服务器](https://github.com/JianShaw/blog/issues/1)
