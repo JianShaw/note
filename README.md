@@ -31,3 +31,5 @@
 - [async异步操作两个常用的方法](https://github.com/JianShaw/blog/issues/4)
 
 > react
+
+- [redux源码学习(一)](https://github.com/JianShaw/blog/issues/5)
