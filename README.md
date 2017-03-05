@@ -33,3 +33,4 @@
 > react
 
 - [redux源码学习(一)](https://github.com/JianShaw/blog/issues/5)
+- [redux源码学习(二)](https://github.com/JianShaw/blog/issues/6)
