@@ -32,3 +32,76 @@ Node的方案是利用单线程，远离多线程死锁、状态同步等问题�
 它期望I/O的调用不再阻塞后续运算，将原有等待I/O完成的这段时间分配给其余需要的业务去执行。
 
  ![demo](./img/IO.png)
+
+ 
+ ### 现实的异步I/O ###
+
+ 在场景是单线程的状况下。通过让部分线程进行阻塞I/O或者非阻塞I/O加轮询技术来完成数据获取，让一个线程进行计算处理。通过线程间的通信将I/O得到的数据进行传递，便实现了一个异步I/O
+
+ ![demo](./img/IO2.png)
+
+
+ 由于windows平台和linux的天生差异。Node提供了libuv作为抽象封装层，使平台兼容性的判断都由这一层来完成。
+
+ * 我们强调的单线程仅仅只是js执行在单线程中。在node中，无论在哪个平台，内部完成I/O任务的另有线程池 *
+
+
+ ## Node异步I/O ##
+
+ ### 事件循环 ###
+ 
+ 先说一下Node自身的执行模型，事件循环。跟js的事件循环基本相同。在启动时，Node会创建一个循环.这个循环体执行一次的过程被称为Tick。每个Tick的过程如下。
+ ```
+ var eventLoop = []
+while(true){
+
+}
+ ```
+ ![demo](./img/EventLoop.png)
+
+ ### 观察者 ###
+
+每个Tick的过程，如果判断是否有事件需要处理？这里引入观察者的概念。
+
+ ### 请求对象 ###
+
+ 对于一般的毁掉函数，函数是我们自行调用。
+ ```
+ var forEach = function(list,cb){
+     for(var i=0;i<list.length;i++){
+         callback(list[i],i,list)
+     }
+ }
+ ```
+对于Node 的异步I/O调用而言，回调函数不应由开发者调用。事实上，从js发起调用到内核执行完IO操作的过程中，存在着中间产物，叫做请求对象。
+
+以`fs.open`作为例子，来一探究竟是如何进行底层调用的。
+```
+fs.open = function(path,flags,mode,callback){
+    binding.open(pathModule._makeLong(path),
+        stringToFlags(flags),
+        mode,
+        callback);
+    )
+}
+```
+js层面的代码通过调用c++核心模块进行下层操作，具体过程如下
+
+![demo](./img/fsOpen.png)
+
+从JavaScript调用Node的核心模块，核心模块调用C++内建模块，内建模块通过libuv进行系统调用，这是Node里经典的调用方式。。`libuv`作为封装层，有两个平台的实现，实质上是调用了`uv_fs_open`方法。
+
+`uv_fs_open`的调用过程中，我们创建了一个 `FSReqWrap`请求对象。从JavaScript层传入的参数和当前方法都被封装在这个请求对象中.我们最为关注的回调函数则被设置在这个对象的`oncomplete_sym`属性上:
+ ```
+    req_wrap->object_>Set(oncomplete_sym,callback)
+ ```
+ 对象包装完毕后，在windows下，则调用`QueueUserWorkItem()`方法将这个 `FSReqWrap`对象推入线程池中等待执行，代码如下
+ ```
+    QueueUserWorkItem(&uv_fs_thread_proc),
+                        req,
+                        WT_EXECUTEDEFAULT)
+ ```
+`QueueUserWorkItem`方法接受3个参数，第一个是将要执行的方法的引用，这里引用的是`uv_fs_thread_proc`，第二个参数是`v_fs_thread_proc`方法运行时所需要的参数;第三个参数是执行的标志。当线程池中有可用线程时，我们会调用`uv_fs_thread_proc`方法。`uv_fs_thread_proc`方法会根据传入的参数的类型调用相应的底层函数。`uv_fs_open`实际上调用的是`fs_open`方法
+
+
+ ### 执行回调 ###
