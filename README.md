@@ -34,4 +34,4 @@
 
 - [redux源码学习(一)](https://github.com/JianShaw/blog/issues/5)
 - [redux源码学习(二)](https://github.com/JianShaw/blog/issues/6)
-- [redux源码学习(二)](https://github.com/JianShaw/blog/blob/master/react/redux-saga%E5%88%9D%E6%8E%A2-%E4%BD%BF%E7%94%A8.md)
+- [redux-saga初探](https://github.com/JianShaw/blog/blob/master/react/redux-saga%E5%88%9D%E6%8E%A2-%E4%BD%BF%E7%94%A8.md)
