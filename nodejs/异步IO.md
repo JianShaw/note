@@ -103,5 +103,59 @@ js层面的代码通过调用c++核心模块进行下层操作，具体过程如
  ```
 `QueueUserWorkItem`方法接受3个参数，第一个是将要执行的方法的引用，这里引用的是`uv_fs_thread_proc`，第二个参数是`v_fs_thread_proc`方法运行时所需要的参数;第三个参数是执行的标志。当线程池中有可用线程时，我们会调用`uv_fs_thread_proc`方法。`uv_fs_thread_proc`方法会根据传入的参数的类型调用相应的底层函数。`uv_fs_open`实际上调用的是`fs_open`方法
 
+by now,JavaScript调用立即返回，由JavaScript层面发起的异步调用的第一阶段就此结束。JS单线程可以继续呈执行当前任务的后续操作。当前的IO操作在线程池中等待执行，不管它是否阻塞IO，都不会影响JS线程的后续执行，就此达到了异步的目的。
+
+请求对象是异步IO过程中的重要中间产物，所有的状态都保存在这个对象中，包括送入线程池等待执行以及IO操作完毕后的回调处理。
+
 
  ### 执行回调 ###
+
+ 组装好请求对象放入IO线程池等待执行。是第一部分。回调通知是第二部分。
+
+ 线程池中的I/O操作调用完毕后，会将获取的结果储存在req->result属性上，然后调用`PostQueuedCompletionStatus()`通知IOCP,告知当前对象操作已经完成。
+ `PostQueuedCompletionStatus()`方法的作用是向IOCP提交执行状态，并将线程归还线程池。通过`PostQueuedCompletionStatus()`提交的状态，可以通过`GetQueuedCompletionStatus()`提取。
+
+ 在这个过程中，我们还调用了事件循环I/O观察者。在每次Tick的执行中，它会调用IOCP相关的`GetQueuedCompletionStatus`方法来检查线程池中是否有执行完的请求，如果存在，会将请求对象加入到I/O观察者的队列中，然后将其当作事件处理。
+
+ I/O观察者回调函数的行为就是去处请求对象的result属性作为参数，去除oncomplete_sym属性作为方法，然后调用执行，以此达到调用JavaScript中传入的回调函数的目的。
+
+ ![demo](./img/IOLoop.png)
+
+ 事件循环、观察者、请求对象、I/O线程池组成了Node异步I/O模型的基本要素。
+
+
+ ## 非I/O的异步API ##
+
+ 分别是setTimeout,setInterval,setImmediate,process.nextTick
+
+
+ ### setTimeout ###
+ 与浏览器中的API一致。无需I/O线程池的参与。调用setTimeout创建的定时器会被插入到定时器观察者内部的一个红黑树中。每次Tick执行，会从该红黑树中迭代取出定时器对象，检查是否超过定时事件，如果超过，就形成一个事件，它的毁掉函数立刻执行。
+
+  ![demo](./img/setTimoutHandle.png)
+
+ ### process.nextTick()  ###
+
+为了立即执行一个异步任务，我们可能会用如下的代码
+```
+setTimout(function(){},0)
+```
+
+定时器的精度不够。而且采用定时器需要动用红黑树，创建定时器对象，迭代等，setTimeout相对更浪费性能。 此时process.nextTick()方法的操作更为轻量。
+
+```
+process.nextTick = function(cb){
+    if(process._exting) return
+    if(tickDepth >= process.maxTickDepth)
+        maxTickWarn()
+    var tock = {
+        callback: cb
+    }
+    if(process.domain) tock.domain = process.domain
+    nextTickQueue.push(tock);
+    if(nextTickQueue.length){
+        process._needTickCalback();
+    }
+}
+```
+每次执行process.nextTick方法，会将callback放入队列中，在下一轮Tick时取出执行。

@@ -30,6 +30,8 @@
 
 - [async异步操作两个常用的方法](https://github.com/JianShaw/blog/issues/4)
 
+- [异步IO学习](https://github.com/JianShaw/blog/blob/master/nodejs/%E5%BC%82%E6%AD%A5IO.md)
+
 > react
 
 - [redux源码学习(一)](https://github.com/JianShaw/blog/issues/5)
