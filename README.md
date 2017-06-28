@@ -18,6 +18,8 @@
 
 - [webpack 1.x版本构建](https://github.com/JianShaw/webpack1.x-demo)
 
+- [JS类型总结](./JavaScript/JS类型总结.md）
+
 > nodejs
 
 - [实现一个简单的静态服务器](https://github.com/JianShaw/blog/issues/1)
