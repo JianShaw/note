@@ -18,7 +18,7 @@
 
 - [webpack 1.x版本构建](https://github.com/JianShaw/webpack1.x-demo)
 
-- [JS类型总结](./JavaScript/JS类型总结.md）
+- [JS类型总结](https://github.com/JianShaw/blog/blob/master/JavaScript/JS%E7%B1%BB%E5%9E%8B%E6%80%BB%E7%BB%93.md)
 
 > nodejs
 
