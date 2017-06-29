@@ -91,8 +91,55 @@ valueIsNaN(Number.NaN); // true
 
 * 上边一不小心写了判断`null`和`NaN`两个兄弟，可是我们在日常开发中经常会遇见判断一个值是否为数组，或者是否为空对象，那么该如何判断呢，一起写了吧 *
 
-// TODO    困了，睡觉
+### 如何判断数组 ###
+ES5 提供了 Array.isArray()方法来判断数组
 
+我们当然也可以用如下的方法来判断数组,这也是MDN给出的Polyfill
+```
+if (!Array.isArray) {
+  Array.isArray = function(arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+  };
+}
+
+// or
+
+var a = []
+
+a instanceof Array // true
+```
+### 说到数组，就要补充下类数组的概念 ###
+我们知道function的参数arguments是类数组 ，
+我们处理时，需要将arguments转换为数组进行操作
+es6提供了`Array.from()`方法将类数组转换为真正的数组对象
+
+那什么样的结构才符合类数组呢？
+首先我们要从数组`Array`说起
+```
+var arr = [1,2,3,4]
+
+arr[0] //1
+a[1] //2 
+a.length //4
+...
+```
+我们的数组有从0开始的下标，length属性
+
+类数组对象是个对象，当然数组是对象的一个子类。
+它的结构如下
+```
+var likeArr = {
+    0: 1,
+    1: 2,
+    2: 3,
+    3: 4
+}
+likeArr.length = 4
+
+```
+类数组虽然是以key-vlue的格式，但是只要它的属性是从0开始递增，并且有length属性，我们就可以称它为类数组对象
+
+我们可以借用Array.prototype.slice.call()来将类数组转换成真正的数组。
 
 
 ## 内建函数（built-int function） ##
