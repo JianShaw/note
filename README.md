@@ -34,7 +34,7 @@
 
 - [异步IO学习](https://github.com/JianShaw/blog/blob/master/nodejs/%E5%BC%82%E6%AD%A5IO.md)
 
-- [nodejs内存]((https://github.com/JianShaw/blog/blob/master/nodejs/%E5%86%85%E5%AD%98%E7%9B%B8%E5%85%B3.md)
+- [nodejs内存](https://github.com/JianShaw/blog/blob/master/nodejs/%E5%86%85%E5%AD%98%E7%9B%B8%E5%85%B3.md)
 
 > react
 
