@@ -42,6 +42,8 @@
 - [redux源码学习(二)](https://github.com/JianShaw/blog/issues/6)
 - [redux-saga初探](https://github.com/JianShaw/blog/blob/master/react/redux-saga%E5%88%9D%E6%8E%A2-%E4%BD%BF%E7%94%A8.md)
 
+- [prop-types组件使用](./react/prop-types使用.md)
+
 > ideas
 
 - [开发模式-mock层](https://github.com/JianShaw/blog/blob/master/ideas/开发模式-mock层.md)
