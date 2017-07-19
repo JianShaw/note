@@ -157,3 +157,33 @@ ReactDOM.render(<Father/> , div);
 Prop-Types 就是对你的props做了类型限定，能够快速的定位错误，同样，指定了类型，也能避免开发中一些很尴尬的问题。虽然多写了一些代码，但确实提高了工作效率和代码的可维护性。
 
 __开发中使用了cdn上react生产版本，导致没有错误发现，后来将webpack里的externals中的react和react-dom替换为开发版本就出现了报错信息__
+
+
+
+> 设置默认prop的值
+
+```
+Component.defaultProps = {
+  key: value
+}
+```
+
+在封装组件的时候，`defaultProps`显的特别有用。
+
+特定的值，我们需要传递一个Object的参数来传递不同的参数来启动组件，有些时候，当然，这些字段里肯定有相关的默认值。
+
+这样，我们的defaultProps就有了他的用武之地。
+
+demo
+
+```
+ComName.defaultProps = {
+  isY: true,
+  tipText: 'this is a bad name'
+}
+
+```
+
+The defaultProps will be used to ensure that this.props.name will have a value if it was not specified by the parent component. The propTypes typechecking happens after defaultProps are resolved, so typechecking will also apply to the defaultProps.
+
+如果this.props.key没有被指定value，`defaultProps`用来保证this.props.key会有一个默认值。类型检查发生在defaultProps被解决后，所以类型检查也可以应用于defaultProps.
