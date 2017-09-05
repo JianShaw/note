@@ -30,3 +30,11 @@ js 是单一原型链的继承模型，简单点，就是通过唯一的prototyp
 
 此时，我们希望我们的entrancePage 继承上边的多重方法，而我绝对不会去 一个个extends
 
+
+
+换电脑，做备注
+
+https://www.h5jun.com/post/mixin-in-es6.html
+
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
