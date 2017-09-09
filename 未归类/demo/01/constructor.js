@@ -1,83 +1,154 @@
-var obj = new Object();
+// var obj = new Object();
+var log = console.log.bind(this);
 
-console.log(obj)
-
-class Person{
-    constructor(){
-
-    }
-    age(){
-        return 26 
-    }
-    learn(){
-
-    }
+function Word(){
+    this.num = 5
 }
+Word.prototype = {
+    add: function(){}
+}
+log(new Word().__proto__ == Word.prototype)
+var w =new Word()
 
-
-// class Man extends Person{
+// class Person{
 //     constructor(){
-
+//         this.age = 0;
+//         this.sex = 'male';
 //     }
-  
+//     walk(){
+//         log('person,talk')
+//     }
+//     talk(){
+//         log('talk')
+//     }
 // }
 
-//不调用super
+
+// var p = new Person();
+
+// 测试，extends 一个对象 testObj
 
 
+testObj = Object.create(null);
+class Person{
+    constructor(){
+        this.age = 0;
+        this.sex = 'male';
+    }
+    walk(){
+        log('person,talk')
+    }
+    talk(){
+        log('talk')
+    }
+}
+//实现man
 class Man extends Person{
     constructor(){
         super()
     }
-  
-}
-
-var man =new Man()
-
-console.log(man.age())
-
-
-
-//来自官网的一个demo
-
-
-class Polygon {
-    constructor() {
-        this.name = "Polygon";
+    talk(){
+        log('talk')
+    }
+    get age(){
+        return 5
+    }
+    set age(age){
+        return 6
     }
 }
 
-class Square extends Polygon {
-    constructor() {
-        super();
+//实例化一个man
+
+log(new Man())
+
+//实现boy   extends Man
+
+class Boy extends Person{
+    constructor(){
+        super()
     }
+
 }
 
-class Rectangle {}
-debugger
-Object.setPrototypeOf(Square.prototype, Rectangle.prototype);
+// console.log(obj)
 
-console.log(Object.getPrototypeOf(Square.prototype) === Polygon.prototype); //false
-console.log(Object.getPrototypeOf(Square.prototype) === Rectangle.prototype); //true
+// class Person{
+//     constructor(){
 
-let newInstance = new Square();
-console.log(newInstance.name); //Polygon
+//     }
+//     age(){
+//         return 26 
+//     }
+//     learn(){
+
+//     }
+// }
 
 
+// // class Man extends Person{
+// //     constructor(){
 
-
-var calculatorMixin = Base => class extends Base {
-    calc() { }
-  };
+// //     }
   
-  var randomizerMixin = Base => class extends Base {
-    randomize() { }
-  };
+// // }
+
+// //不调用super
+
+
+// class Man extends Person{
+//     constructor(){
+//         super()
+//     }
+  
+// }
+
+// var man =new Man()
+
+// console.log(man.age())
 
 
 
-  class Foo { }
-  class Bar extends calculatorMixin(randomizerMixin(Foo)) { }
+// //来自官网的一个demo
 
 
-  console.log(new Bar())
+// class Polygon {
+//     constructor() {
+//         this.name = "Polygon";
+//     }
+// }
+
+// class Square extends Polygon {
+//     constructor() {
+//         super();
+//     }
+// }
+
+// class Rectangle {}
+// debugger
+// Object.setPrototypeOf(Square.prototype, Rectangle.prototype);
+
+// console.log(Object.getPrototypeOf(Square.prototype) === Polygon.prototype); //false
+// console.log(Object.getPrototypeOf(Square.prototype) === Rectangle.prototype); //true
+
+// let newInstance = new Square();
+// console.log(newInstance.name); //Polygon
+
+
+
+
+// var calculatorMixin = Base => class extends Base {
+//     calc() { }
+//   };
+  
+//   var randomizerMixin = Base => class extends Base {
+//     randomize() { }
+//   };
+
+
+
+//   class Foo { }
+//   class Bar extends calculatorMixin(randomizerMixin(Foo)) { }
+
+
+//   console.log(new Bar())
