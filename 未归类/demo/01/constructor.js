@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // var obj = new Object();
 var log = console.log.bind(this);
 
@@ -27,6 +28,9 @@ var w =new Word()
 // var p = new Person();
 
 // 测试，extends 一个对象 testObj
+=======
+
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
 
 
 testObj = Object.create(null);
@@ -71,6 +75,7 @@ class Boy extends Person{
 
 }
 
+<<<<<<< HEAD
 // console.log(obj)
 
 // class Person{
@@ -90,11 +95,19 @@ class Boy extends Person{
 // //     constructor(){
 
 // //     }
+=======
+var p = new Person();
+class Man extends Person{
+    constructor(){
+        super()
+    }
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
   
 // // }
 
 // //不调用super
 
+<<<<<<< HEAD
 
 // class Man extends Person{
 //     constructor(){
@@ -102,11 +115,36 @@ class Boy extends Person{
 //     }
   
 // }
+=======
+class A {
+ constructor(){
+    //  super()
+ }
+ afn(){
+     console.log(1)
+ }
+ bfn(){
+     console.log(2)
+ }
+}
+// console.log(man.age())
+
+//此时想把 p对象的prototye指向 为A ,如下操作
+
+Person.__proto__ = A;
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
 
 // var man =new Man()
 
+<<<<<<< HEAD
 // console.log(man.age())
+=======
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
 
+//对象的原型链，指向A.prototope
+
+//
+//来自官网的一个demo
 
 
 // //来自官网的一个demo
@@ -124,19 +162,30 @@ class Boy extends Person{
 //     }
 // }
 
+<<<<<<< HEAD
 // class Rectangle {}
 // debugger
 // Object.setPrototypeOf(Square.prototype, Rectangle.prototype);
+=======
+class Rectangle {}
+Object.setPrototypeOf(Square.prototype, Rectangle.prototype);
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
 
 // console.log(Object.getPrototypeOf(Square.prototype) === Polygon.prototype); //false
 // console.log(Object.getPrototypeOf(Square.prototype) === Rectangle.prototype); //true
 
+<<<<<<< HEAD
 // let newInstance = new Square();
 // console.log(newInstance.name); //Polygon
 
 
 
 
+=======
+let newInstance = new Square();
+
+
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
 // var calculatorMixin = Base => class extends Base {
 //     calc() { }
 //   };
@@ -144,8 +193,16 @@ class Boy extends Person{
 //   var randomizerMixin = Base => class extends Base {
 //     randomize() { }
 //   };
+<<<<<<< HEAD
+=======
 
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
 
+//   var t = function(Base){
+//       return class extends Base{
+
+//       }
+//   }
 
 //   class Foo { }
 //   class Bar extends calculatorMixin(randomizerMixin(Foo)) { }

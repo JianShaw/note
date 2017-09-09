@@ -1,3 +1,49 @@
+## 观察__proto__ ##
+
+```
+class Person{
+    constructor(){
+
+    }
+    age(){
+        return 26 
+    }
+    learn(){
+
+    }
+}
+console.log(new Person())
+
+```
+ ![demo](./demo/01/person.png)
+
+
+ 我特地展开`__proto__`对象并截图，
+
+ Person的实例，通过一个__proto__指向一个对象，这个对象有constructor属性，该属性为`class Person`
+
+ 我先试着猜想，这个`__proto__`指向Person
+
+ 可是
+ ```
+ p.__proto__ == Person //false
+ ```
+
+```
+ p.__proto__ == Person.prototype // true
+```
+
+so
+
+p.__proto__ 指向的是Person类的prototype
+
+```
+p.__proto__.__proto__ == Object.prototype // true
+```
+
+不难得出，__proto__总是指向它父类的原型链。
+
+可以使用__proto__来修改原型链的指向。但是因为它有性能问题。
 
 
 ## class ##
@@ -176,4 +222,11 @@ var demo = class {
 
 ## 补充 ##
 
+<<<<<<< HEAD
 - 类不存在变量提升，必须保证子类在父类后边，new操作在类后边
+=======
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
+
+
+
+>>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
