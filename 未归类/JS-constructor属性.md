@@ -80,7 +80,7 @@ Function.prototype.NEW = function(){
    return o
 }
 ```
-
+success.
 
 ## 实例对象 ##
 
@@ -128,12 +128,6 @@ so
 p.__proto__.hasOwnProperty('talk') // true
 ```
 
-
-
-
-
-
-
 ## extends 继承 ##
 
 extends关键词用来创建一个普通类或者内建对象的子类。
@@ -152,6 +146,7 @@ extends关键词用来创建一个普通类或者内建对象的子类。
 
 此时，我们希望我们的entrancePage 继承上边的多重方法，而我绝对不会去 一个个extends
 
+.
 ## __proto__ ##
 
 ## set get操作 ##
