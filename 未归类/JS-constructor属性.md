@@ -182,7 +182,7 @@ extends关键词用来创建一个普通类或者内建对象的子类。
 
 有没有想过，我想extends 一个对象呢
 
-别想了，当然不可以，传入一个对象，会报错。错误信息，自己试一下就知道了。
+别傻了，当然不可以，传入一个对象，会报错。错误信息，自己试一下就知道了。
 
 言归正传，js 是单一原型链的继承模型，简单点，就是通过唯一的prototype来向上查找，获取prototype上的方法，属性，来作为自身的方法属性来使用。
 
@@ -191,10 +191,111 @@ extends关键词用来创建一个普通类或者内建对象的子类。
 比如这样 base  -> util -> basePc/baseApp -> entrancePage
 
 此时，我们希望我们的entrancePage 继承上边的多重方法，而我绝对不会去 一个个extends
+## super ##
 
-.
+super 关键字用于调用一个对象的父对象上的函数。
+
+- super单独出现时，super关键字必须在this关键字之前使用
+- 不注意的是，super可以直接调用父对象上的函数
+- copy的mdn上的demo.super可以调用父类的静态方法。此时，可以理解super为对象，可以通过super.prop这种方式调用父类上的函数。
+```
+class Human {
+  constructor() {}
+  static ping() {
+    return 'ping';
+  }
+}
+
+class Computer extends Human {
+  constructor() {}
+  static pingpong() {
+    return super.ping() + ' pong';
+  }
+}
+Computer.pingpong(); // 'ping pong'
+```
+- 接上，要注意，super 其实指向的是father.prototype，所以如果父类实例上的属性，是无法通过super.prop取到的。
+- 阮老师的书里有个demo也挺好，虽然B的super.print()调用的是A.prototype.print()，但是绑定的this确是B的this.super.print()执行的时候其实是super.print.call(this)
+```
+class A {
+  constructor() {
+    this.x = 1;
+  }
+  print() {
+    console.log(this.x);
+  }
+}
+
+class B extends A {
+  constructor() {
+    super();
+    this.x = 2;
+  }
+  m() {
+    super.print();
+  }
+}
+```
+
+- Super.prop 不能覆写不可写属性
+
+- super作为对象，在静态方法中，super指向父类，而不是父类的原型对象。
+
 ## __proto__ ##
+prototype属性和__proto__属性，因此同时存在两条继承链。
 
+每一个对象都有__proto__属性，指向对应的构造函数的prototype属性
+
+- 子类的__proto__属性，`表示构造函数的继承`，总是指向父类。
+- 子类prototype属性的__proto__属性，`表示方法的继承`，总是指向父类的prototype属性。
+```
+class Person{
+    constructor(){
+
+    }
+    talk(){
+
+    }
+    walk(){
+
+    }
+}
+
+class Man extends Person{
+    constructor(){
+        super()
+    }
+   
+}
+Man.__proto__ == Person;
+Man.prototype.__proto__ = Person.prototype // true
+```
+## Object.setPrototypeOf ##
+Object.setPrototypeOf() 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
+```
+Object.setPrototypeOf(obj, prototype)
+//obj要设置其原型的对象。
+//prototype 该对象的新原型
+
+// I write a easy demo
+var Person = class {
+   walk(){
+		console.log('talk')
+	}
+}
+
+var Man = class {
+	talk(){
+		return 1
+	}
+}
+
+var  p = new Person();
+p.walk() // talk
+Object.setPrototypeOf(p,Man.prototype)
+p.talk() //1
+p.walk() // TypeError: p.walk is not a function
+```
 ## set get操作 ##
 
 在class内通过`set`,`get`关键字，对某个属性设置存取函数。
@@ -222,11 +323,4 @@ var demo = class {
 
 ## 补充 ##
 
-<<<<<<< HEAD
 - 类不存在变量提升，必须保证子类在父类后边，new操作在类后边
-=======
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
-
-
-
->>>>>>> 634992bbb61a6a99a16455f21c372e23bf972f74
