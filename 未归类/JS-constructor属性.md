@@ -1,6 +1,6 @@
-## 观察__proto__ ##
+# 观察__proto__ #
 
-```
+```js
 class Person{
     constructor(){
 
@@ -12,11 +12,10 @@ class Person{
 
     }
 }
-console.log(new Person())
 
 ```
- ![demo](./demo/01/person.png)
 
+ ![demo](./demo/01/person.png)
 
  我特地展开`__proto__`对象并截图，
 
@@ -214,9 +213,14 @@ class Computer extends Human {
 }
 Computer.pingpong(); // 'ping pong'
 ```
+
 - 接上，要注意，super 其实指向的是father.prototype，所以如果父类实例上的属性，是无法通过super.prop取到的。
-- 阮老师的书里有个demo也挺好，虽然B的super.print()调用的是A.prototype.print()，但是绑定的this确是B的this.super.print()执行的时候其实是super.print.call(this)
-```
+
+- 阮老师的书里有个demo也挺好，虽然B的super.print()调用的是
+
+A.prototype.print()，但是绑定的this确是B的this.super.print()执行的时候其实是super.print.call(this)
+
+```script
 class A {
   constructor() {
     this.x = 1;
@@ -242,13 +246,16 @@ class B extends A {
 - super作为对象，在静态方法中，super指向父类，而不是父类的原型对象。
 
 ## __proto__ ##
+
 prototype属性和__proto__属性，因此同时存在两条继承链。
 
 每一个对象都有__proto__属性，指向对应的构造函数的prototype属性
 
 - 子类的__proto__属性，`表示构造函数的继承`，总是指向父类。
+
 - 子类prototype属性的__proto__属性，`表示方法的继承`，总是指向父类的prototype属性。
-```
+
+```script
 class Person{
     constructor(){
 
@@ -265,44 +272,44 @@ class Man extends Person{
     constructor(){
         super()
     }
-   
 }
 Man.__proto__ == Person;
 Man.prototype.__proto__ = Person.prototype // true
 ```
+
 ## Object.setPrototypeOf ##
+
 Object.setPrototypeOf() 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
-```
+
+```js
 Object.setPrototypeOf(obj, prototype)
 //obj要设置其原型的对象。
 //prototype 该对象的新原型
-
 // I write a easy demo
 var Person = class {
    walk(){
-		console.log('talk')
+	 console.log('talk')
 	}
 }
-
 var Man = class {
 	talk(){
 		return 1
 	}
 }
-
 var  p = new Person();
 p.walk() // talk
 Object.setPrototypeOf(p,Man.prototype)
 p.talk() //1
 p.walk() // TypeError: p.walk is not a function
 ```
+
 ## set get操作 ##
 
 在class内通过`set`,`get`关键字，对某个属性设置存取函数。
 
 demo
 
-```
+```js
 var demo = class {
     set prop(value){
 
@@ -313,14 +320,45 @@ var demo = class {
 }
 
 ```
-注意，set操作，可以用来做参数处理。
 
-## 为什么要有prototype ##
+## mixin模式的继承 ##
 
-## 如此设计，有什么缺点么 ##
+实际开发中，我们很可能让一个类，继承多个类来更好的实现业务.而mixin作的就是把多个类混入一个类。从而，我们只需要继承这一个类就可以了。还是copy阮老师的方法。
 
-## 私有方法`属性 ##
+```js
+function mix(...mixins) {
+  class Mix {}
+
+  for (let mixin of mixins) {
+    copyProperties(Mix, mixin);
+    copyProperties(Mix.prototype, mixin.prototype);
+  }
+
+  return Mix;
+}
+
+function copyProperties(target, source) {
+  for (let key of Reflect.ownKeys(source)) {
+    if ( key !== "constructor"
+      && key !== "prototype"
+      && key !== "name"
+    ) {
+      let desc = Object.getOwnPropertyDescriptor(source, key);
+      Object.defineProperty(target, key, desc);
+    }
+  }
+}
+```
+
+稍微解释下copyProperties这个方法，对传入的source类，先通过Reflect.ownKeys(source))来获取source上的所有key的name，也就是属性或者方法名，如果传入的是Array.prototye，这些key就是挂在prototype上的方法，比如slice，pop，join，shift，unshift，再通过Object.getOwnPropertyDescriptor(source, key)获取描述符，并通过Object。defineProperty来设置到target对象上。
+
+
+## 原型模式的优点 ##
+
+可以让所有的实例对象，共享原项链上的方法。但是这里也有个问题，那就是我两个实例A,B都继承了Person，如果我有一个需求想要修改A的原型链上的某个属性attr为数字，我直接修改Person原型虽然是可以达到的，但是此时B实例上的属性也会被修改。
+
+原型模式通过一个prototye属性，这个prototype其实就是一个指针，指向一个对象，你当前的对象通过这个指针的指向，可以借用指向的对象上的方法属性和方法。对于有类似功能对象，我们就不必在重新定义类似的相同的方法，或者属性。
 
 ## 补充 ##
 
-- 类不存在变量提升，必须保证子类在父类后边，new操作在类后边
+- class类不存在变量提升，必须保证子类在父类后边，new操作在类后边
