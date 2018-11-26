@@ -20,6 +20,8 @@
 
 - [JS类型总结](https://github.com/JianShaw/blog/blob/master/JavaScript/JS%E7%B1%BB%E5%9E%8B%E6%80%BB%E7%BB%93.md)
 
+- [eslint规则整理](https://github.com/JianShaw/blog/issues/7)
+
 > nodejs
 
 - [实现一个简单的静态服务器](https://github.com/JianShaw/blog/issues/1)
