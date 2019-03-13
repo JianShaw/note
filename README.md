@@ -10,14 +10,6 @@
 
 - [发布订阅模式](https://segmentfault.com/a/1190000007357192)
 
-- [vuejs简单使用](http://www.jianshu.com/p/7db811a39f7a)
-
-- [requirejs使用一](http://www.jianshu.com/p/6aca1e429019)
-
-- [requirejs使用二](http://www.jianshu.com/p/980e44636267)
-
-- [webpack 1.x版本构建](https://github.com/JianShaw/webpack1.x-demo)
-
 - [JS类型总结](https://github.com/JianShaw/blog/blob/master/JavaScript/JS%E7%B1%BB%E5%9E%8B%E6%80%BB%E7%BB%93.md)
 
 - [eslint规则整理](https://github.com/JianShaw/blog/issues/7)
@@ -43,9 +35,7 @@
 - [redux源码学习(一)](https://github.com/JianShaw/blog/issues/5)
 - [redux源码学习(二)](https://github.com/JianShaw/blog/issues/6)
 - [redux-saga初探](https://github.com/JianShaw/blog/blob/master/react/redux-saga%E5%88%9D%E6%8E%A2-%E4%BD%BF%E7%94%A8.md)
-
 - [prop-types组件使用](./react/prop-types使用.md)
 
-> ideas
-
-- [开发模式-mock层](https://github.com/JianShaw/blog/blob/master/ideas/开发模式-mock层.md)
+> eggjs
+- [sequelize学习笔记(未完成)]()
